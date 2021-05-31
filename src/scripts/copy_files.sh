@@ -1,3 +1,7 @@
+echo "#$SYNC_OPTIONS#"
+echo "|$SYNC_OPTIONS|"
+echo "*$SYNC_OPTIONS*"
+
 if [ "$SYNC_OPTIONS" == "" ]; then
     aws s3 sync "$SOURCE_FOLDER" "s3://$BUCKET_NAME/" --exclude logos/* --exclude sitemap.xml --cache-control max-age=31536000 --content-encoding gzip
 else
