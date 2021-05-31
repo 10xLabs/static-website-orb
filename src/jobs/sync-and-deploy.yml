@@ -19,7 +19,7 @@ parameters:
     description: "AWS CLI S3 sync options"
 steps:
   - checkout
-  - sync_and_deploy:
+  - sync-and-deploy:
     bucket-name: << parameters.bucket-name >>
     source-folder: << parameters.source-folder >>
     distribution-id: << parameters.distribution-id >>

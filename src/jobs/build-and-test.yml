@@ -12,6 +12,6 @@ parameters:
     description: "The private Github registry"
 steps:
   - checkout
-  - build_and_test:
+  - build-and-test:
     npm-github-token: << parameters.npm-github-token >>
     npm-github-registry: << parameters.npm-github-registry >>
