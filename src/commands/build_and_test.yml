@@ -1,0 +1,35 @@
+description: >
+  This command build the static files
+parameters:
+  npm-github-token:
+    type: string
+    description: "The private Github token"
+  npm-github-registry:
+    type: string
+    description: "The private Github registry"
+steps:
+  - run:
+      environment:
+        NPM_GITHUB_TOKEN: << parameters.npm-github-token >>
+        NPM_GITHUB_REGISTRY: << parameters.npm-github-registry >>
+      name: Configure Github registry
+      command: << include(scripts/configure_github_repository.sh) >>
+  - restore_cache:
+      key: node-modules-{{checksum "package-lock.json"}}
+  - run:
+      name: Install dependencies
+      command: << include(scripts/install_dependencies.sh) >>
+  - save_cache:
+      key: node-modules-{{checksum "package-lock.json"}}
+      paths:
+        - ./node_modules
+  - run:
+      name: Run tests
+      command: << include(scripts/run_tests.sh) >>
+  - run:
+      name: Build distribution
+      command: << include(scripts/build_distribution.sh) >>
+  - persist_to_workspace:
+      root: .
+      paths:
+        - public
