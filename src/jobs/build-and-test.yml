@@ -13,5 +13,5 @@ parameters:
 steps:
   - checkout
   - build-and-test:
-    npm-github-token: << parameters.npm-github-token >>
-    npm-github-registry: << parameters.npm-github-registry >>
+      npm-github-token: << parameters.npm-github-token >>
+      npm-github-registry: << parameters.npm-github-registry >>

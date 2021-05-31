@@ -20,7 +20,7 @@ parameters:
 steps:
   - checkout
   - sync-and-deploy:
-    bucket-name: << parameters.bucket-name >>
-    source-folder: << parameters.source-folder >>
-    distribution-id: << parameters.distribution-id >>
-    sync-options: << parameters.sync-options >>
+      bucket-name: << parameters.bucket-name >>
+      source-folder: << parameters.source-folder >>
+      distribution-id: << parameters.distribution-id >>
+      sync-options: << parameters.sync-options >>
