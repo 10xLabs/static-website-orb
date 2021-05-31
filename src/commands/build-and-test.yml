@@ -1,17 +1,7 @@
 description: >
   This command build the static files
-parameters:
-  npm-github-token:
-    type: string
-    description: "The private Github token"
-  npm-github-registry:
-    type: string
-    description: "The private Github registry"
 steps:
   - run:
-      environment:
-        NPM_GITHUB_TOKEN: << parameters.npm-github-token >>
-        NPM_GITHUB_REGISTRY: << parameters.npm-github-registry >>
       name: Configure Github registry
       command: << include(scripts/configure_github_repository.sh) >>
   - restore_cache:
