@@ -28,5 +28,5 @@ steps:
   - run:
       environment:
         DISTRIBUTION_ID: << parameters.distribution-id >>
-      name: Copy files to bucket
+      name: Invalidate CloudFront distribution 
       command: << include(scripts/create_invalidation.sh) >>
