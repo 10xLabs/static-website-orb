@@ -28,5 +28,5 @@ steps:
   - run:
       environment:
         DISTRIBUTION_ID: << parameters.distribution-id >>
-      name: Invalidate CloudFront distribution 
+      name: Invalidate CloudFront distribution
       command: << include(scripts/create_invalidation.sh) >>
