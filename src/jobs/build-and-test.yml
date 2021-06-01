@@ -1,0 +1,8 @@
+description: >
+  Build and test frontend application
+
+executor: default
+
+steps:
+  - checkout
+  - build-and-test
