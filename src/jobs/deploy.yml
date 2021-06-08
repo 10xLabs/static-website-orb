@@ -1,0 +1,13 @@
+description: >
+  Copy files and invalidate the distribution
+
+executor: default
+
+parameters:
+  environment:
+    type: string
+
+steps:
+  - checkout
+  - deploy:
+      environment: << parameters.environment >>
