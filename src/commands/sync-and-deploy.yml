@@ -1,0 +1,32 @@
+description: >
+  This command copy files to bucket and invalidate the CloudFront distribution
+parameters:
+  bucket-name:
+    type: string
+    description: "The destination bucket"
+  source-folder:
+    type: string
+    description: "The source folder to copy files"
+  distribution-id:
+    type: string
+    description: "The CloudFront distribution ID"
+  sync-options:
+    type: string
+    default: ""
+    description: "AWS CLI S3 sync options"
+steps:
+  - attach_workspace:
+      at: .
+  - aws-cli/setup
+  - run:
+      environment:
+        BUCKET_NAME: << parameters.bucket-name >>
+        SOURCE_FOLDER: << parameters.source-folder >>
+        SYNC_OPTIONS: << parameters.sync-options >>
+      name: Copy files to bucket
+      command: << include(scripts/copy_files.sh) >>
+  - run:
+      environment:
+        DISTRIBUTION_ID: << parameters.distribution-id >>
+      name: Invalidate CloudFront distribution
+      command: << include(scripts/create_invalidation.sh) >>

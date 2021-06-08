@@ -1,6 +1,5 @@
 description: >
   This command build the static files
-
 steps:
   - run:
       name: Configure Github registry
