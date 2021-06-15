@@ -1,10 +1,6 @@
 description: >
   This command deploy the project using Pulumi
 
-parameters:
-  environment:
-    type: string
-
 steps:
   - attach_workspace:
       at: .
@@ -13,8 +9,6 @@ steps:
       command: << include(scripts/install_pulumi.sh) >>
   - run:
       name: Set stack name
-      environment:
-        ENVIRONMENT: << parameters.environment >>
       command: << include(scripts/set_stack_name.sh) >>
   - run:
       name: Pulumi update

@@ -3,11 +3,6 @@ description: >
 
 executor: default
 
-parameters:
-  environment:
-    type: string
-
 steps:
   - checkout
-  - deploy:
-      environment: << parameters.environment >>
+  - deploy
