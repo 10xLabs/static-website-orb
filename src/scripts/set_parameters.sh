@@ -1,4 +1,4 @@
-value=$(aws-vault exec kolors-prod -- aws ssm get-parameter --name "/$ENVIRONMENT/$CIRCLE_PROJECT_REPONAME/PARAMETERS" | jq '.Parameter.Value' | tr -d \")
+value=$(aws ssm get-parameter --name "/$ENVIRONMENT/$CIRCLE_PROJECT_REPONAME/PARAMETERS" | jq '.Parameter.Value' | tr -d \")
 readarray -t values <<<"$value"
 
 for val in "${values[@]}"
