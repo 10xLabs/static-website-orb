@@ -17,6 +17,12 @@ steps:
       name: Run tests
       command: << include(scripts/run_tests.sh) >>
   - run:
+      name: Install AWS CLI
+      command: << include(scripts/install_aws_cli.sh) >>
+  - run:
+      name: Set parameters
+      command: << include(scripts/set_parameters.sh) >>
+  - run:
       name: Build distribution
       command: << include(scripts/build_distribution.sh) >>
   - persist_to_workspace:
