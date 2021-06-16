@@ -17,6 +17,9 @@ steps:
       name: Run tests
       command: << include(scripts/run_tests.sh) >>
   - run:
+      name: Set parameters
+      command: << include(scripts/set_parameters.sh) >>
+  - run:
       name: Build distribution
       command: << include(scripts/build_distribution.sh) >>
   - persist_to_workspace:
