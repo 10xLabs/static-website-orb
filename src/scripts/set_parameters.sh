@@ -1,4 +1,5 @@
 value=$(aws ssm get-parameter --name "/$ENVIRONMENT/$CIRCLE_PROJECT_REPONAME/PARAMETERS" --region "$AWS_DEFAULT_REGION" --with-decryption | jq '.Parameter.Value' | tr -d \")
+echo "$value"
 IFS=$'|' read -rd '' -a values <<<"$value"
 for val in "${values[@]}"
 do
