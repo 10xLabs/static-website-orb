@@ -8,3 +8,5 @@ do
     echo "**************************"
     echo "export $val" >> "$BASH_ENV"
 done
+
+cat "$BASH_ENV"
