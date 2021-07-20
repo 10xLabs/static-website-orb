@@ -2,9 +2,6 @@ description: >
   This command build the static files
 
 steps:
-  - run:
-      name: Configure Github registry
-      command: << include(scripts/configure_github_registry.sh) >>
   - restore_cache:
       key: node-modules-{{checksum "package-lock.json"}}
   - run:
