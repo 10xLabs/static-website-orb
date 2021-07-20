@@ -1,0 +1,7 @@
+description: >
+  This command run the tests
+
+steps:
+  - run:
+      name: Run tests
+      command: << include(scripts/test.sh) >>

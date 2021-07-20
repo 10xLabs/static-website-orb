@@ -1,0 +1,17 @@
+description: >
+  This command build the static files
+
+steps:
+  - run:
+      name: Install AWS CLI
+      command: << include(scripts/install_aws_cli.sh) >>
+  - run:
+      name: Set parameters
+      command: << include(scripts/set_parameters.sh) >>
+  - run:
+      name: Build distribution
+      command: << include(scripts/build.sh) >>
+  - persist_to_workspace:
+      root: .
+      paths:
+        - public

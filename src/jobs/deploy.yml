@@ -1,7 +1,7 @@
 description: >
   Copy files and invalidate the distribution
 
-executor: default
+executor: node
 
 steps:
   - checkout

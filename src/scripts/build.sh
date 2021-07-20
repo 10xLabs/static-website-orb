@@ -4,5 +4,4 @@ if [[ "$COMMIT_MESSAGE" =~ ^Release[[:space:]]v[[:digit:]]+.[[:digit:]]+.[[:digi
     RELEASE="${COMMIT_MESSAGE:9}"
 fi
 
-printenv
 RELEASE="$RELEASE" npm run build

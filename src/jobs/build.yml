@@ -1,0 +1,9 @@
+description: >
+  Build static files
+
+executor: node
+
+steps:
+  - checkout
+  - install
+  - build

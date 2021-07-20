@@ -1,0 +1,9 @@
+description: >
+  Run tests
+
+executor: node
+
+steps:
+  - checkout
+  - install
+  - test
