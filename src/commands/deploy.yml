@@ -1,15 +1,24 @@
 description: >
   This command deploy the project using Pulumi
 
+parameters:
+  working-directory:
+    type: string
+    default: deploy
+
 steps:
   - attach_workspace:
       at: .
   - run:
       name: Install Pulumi CLI
+      environment:
+        WORKING_DIRECTORY: << parameters.working-directory >>
       command: << include(scripts/install_pulumi.sh) >>
   - run:
       name: Set stack name
       command: << include(scripts/set_stack_name.sh) >>
   - run:
       name: Pulumi update
+      environment:
+        WORKING_DIRECTORY: << parameters.working-directory >>
       command: << include(scripts/pulumi_update.sh) >>
