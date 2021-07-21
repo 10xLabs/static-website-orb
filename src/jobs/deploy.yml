@@ -1,8 +1,14 @@
 description: >
   Copy files and invalidate the distribution
 
-executor: default
+executor: node
+
+parameters:
+  working-directory:
+    type: string
+    default: deploy
 
 steps:
   - checkout
-  - deploy
+  - deploy:
+    working-directory: << parameters.working-directory >>
