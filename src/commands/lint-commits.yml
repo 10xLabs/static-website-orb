@@ -1,5 +1,5 @@
 description: >
-  This lint commit using conventional commits format
+  This lint commits using conventional commits format
 
 steps:
   - run:
@@ -10,4 +10,4 @@ steps:
       command: << include(scripts/configure_commit_linter.sh) >>
   - run:
       name: Lint commit
-      command: << include(scripts/lint_commit.sh) >>
+      command: << include(scripts/lint_commits.sh) >>
