@@ -1,8 +1,0 @@
-description: >
-  This lint commit using conventional commits format
-
-executor: node
-
-steps:
-  - checkout
-  - lint-commit
