@@ -36,14 +36,26 @@ workflows:
   test-pack:
     unless: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - orb-tools/lint # Lint Yaml files
-      - orb-tools/pack # Pack orb source
+      - orb-tools/lint:
+          filters:
+            tags:
+              only: /.*/      
+      - orb-tools/pack:
+          filters:
+            tags:
+              only: /.*/  
       - shellcheck/check:
           dir: ./src/scripts
           exclude: SC2148
+          filters:
+            tags:
+              only: /.*/  
       # optional: Run BATS tests against your scripts
       - bats/run:
           path: ./src/tests
+          filters:
+            tags:
+              only: /.*/ 
       # Publish development version(s) of the orb.
       - orb-tools/publish:
           orb-name: nexbus/static-website
@@ -55,13 +67,14 @@ workflows:
             - orb-tools/pack
             - bats/run
             - shellcheck/check
+          filters:
+            tags:
+              only: /.*/  
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           requires:
             - orb-tools/publish
           vcs-type: << pipeline.project.type >>
           filters:
-            branches:
-              ignore: /.*/
             tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/      
+              only: /.*/     
