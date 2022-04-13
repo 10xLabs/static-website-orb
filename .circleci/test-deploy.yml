@@ -19,5 +19,5 @@ workflows:
           pub-type: production
           requires:
             [orb-tools/lint, orb-tools/pack]
-          context: orb-publisher
+          context: orb-publishing
 
