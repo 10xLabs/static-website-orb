@@ -1,5 +1,5 @@
 version: 2.1
-
+setup: true 
 orbs:
   # Replace this with your own!
   static-website: nexbus/static-website@<< pipeline.parameters.dev-orb-version >>
