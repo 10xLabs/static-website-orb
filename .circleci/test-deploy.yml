@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  orb-tools: circleci/orb-tools@11.1.2
+
+workflows:
+  test-deploy:
+    jobs:
+      - orb-tools/lint:
+          filters:
+            tags:
+              only: /.*/
+      - orb-tools/pack:
+          filters:
+            tags:
+              only: /.*/
+      - orb-tools/publish:
+          orb-name: circleci/orb-tools
+          vcs-type: <<pipeline.project.type>>
+          pub-type: production
+          requires:
+            [orb-tools/lint, orb-tools/pack]
+          context: orb-publisher
+
