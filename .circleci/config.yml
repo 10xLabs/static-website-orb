@@ -33,7 +33,7 @@ jobs:
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
   # This workflow will run on every commit
-  lint-pack:
+  test-pack:
     unless: << pipeline.parameters.run-integration-tests >>
     jobs:
       - orb-tools/lint # Lint Yaml files
@@ -45,9 +45,10 @@ workflows:
       - bats/run:
           path: ./src/tests
       # Publish development version(s) of the orb.
-      - orb-tools/publish-dev:
+      - orb-tools/publish:
           orb-name: nexbus/static-website
           context: orb-publishing # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
+          pub-type: dev
           requires:
             - orb-tools/lint
             - orb-tools/pack
