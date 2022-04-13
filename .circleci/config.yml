@@ -45,7 +45,7 @@ workflows:
       - bats/run:
           path: ./src/tests
       # Publish development version(s) of the orb.
-      - orb-tools-/publish:
+      - orb-tools/publish:
           orb-name: nexbus/static-website
           context: orb-publishing # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
           pub-type: dev
@@ -55,11 +55,11 @@ workflows:
             - orb-tools/pack
             - bats/run
             - shellcheck/check
-      - orb-tools-/continue:
+      - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           name: trigger-integration-dev
           requires:
-            - orb-tools-/publish
+            - orb-tools/publish
           vcs-type: << pipeline.project.type >>
 
   # This `integration-test_deploy` workflow will only run
