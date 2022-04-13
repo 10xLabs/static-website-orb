@@ -77,12 +77,12 @@ workflows:
       # version will be published or if publishing should
       # be skipped.
       # e.g. [semver:patch] will cause a patch version to be published.
-      - orb-tools/dev-promote-prod-from-commit-subject:
+      - orb-tools/publish:
           orb-name: nexbus/static-website
           context: orb-publishing
+          pub-type: production
+          vcs-type: << pipeline.project.type >>          
           add-pr-comment: false
-          fail-if-semver-not-indicated: true
-          publish-version-tag: false
           requires:
             - integration-test-1
           filters:
