@@ -18,7 +18,7 @@ workflows:
           vcs-type: <<pipeline.project.type>>
           pub-type: production
           requires:
-            [orb-tools/lint, orb-tools/review, orb-tools/pack]
+            [orb-tools/lint, orb-tools/pack]
           context: orb-publisher
           filters:
             branches:
