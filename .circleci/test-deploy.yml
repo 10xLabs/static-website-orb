@@ -20,10 +20,4 @@ workflows:
           requires:
             [orb-tools/lint, orb-tools/pack]
           context: orb-publisher
-          filters:
-            branches:
-              only:
-                - master
-                - main
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+
