@@ -57,7 +57,6 @@ workflows:
             - shellcheck/check
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
-          name: trigger-integration-dev
           requires:
             - orb-tools/publish
           vcs-type: << pipeline.project.type >>
