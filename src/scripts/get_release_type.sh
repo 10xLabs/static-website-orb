@@ -1,3 +1,5 @@
+#!/bin/bash
+
 RELEASE_TYPE="PATCH"
 PULL_REQUEST_BODY=$(git log origin/master..origin/develop --pretty=format:%s)
 # shellcheck disable=SC2206
