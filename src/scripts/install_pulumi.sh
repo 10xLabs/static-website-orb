@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "$VERSION" == "latest" ]; then
     curl -L https://get.pulumi.com/ | bash -s
 else

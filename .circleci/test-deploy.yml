@@ -1,26 +1,33 @@
 version: 2.1
 orbs:
-  orb-tools: circleci/orb-tools@11.1.2
-
+  static-website: nexbus/static-website@dev:<<pipeline.git.revision>>
+  orb-tools: circleci/orb-tools@11.1
+filters: &filters
+  tags:
+    only: /.*/
+jobs:
+  # Define one or more jobs which will utilize your orb's commands and parameters to validate your changes.
+  integration-test-1:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
 workflows:
   test-deploy:
     jobs:
-      - orb-tools/lint:
-          filters:
-            tags:
-              only: /.*/
+      # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
+      - command-tests:
+          filters: *filters
       - orb-tools/pack:
-          filters:
-            tags:
-              only: /.*/
+          filters: *filters
       - orb-tools/publish:
-          orb-name: circleci/orb-tools
-          vcs-type: <<pipeline.project.type>>
+          orb-name: nexbus/static-website
+          vcs-type: << pipeline.project.type >>
           pub-type: production
           requires:
-            [orb-tools/lint, orb-tools/pack]
+            - orb-tools/pack
+            - command-tests
           context: orb-publishing
-          enable-pr-comment: false
           filters:
             branches:
               ignore: /.*/
