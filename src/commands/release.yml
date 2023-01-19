@@ -6,6 +6,9 @@ steps:
       name: Install Github CLI
       command: << include(scripts/install_github_cli.sh) >>
   - run:
+      name: Set Github CLI default repo
+      command: << include(scripts/set_github_cli_default_repo.sh) >>
+  - run:
       name: Create release tag
       command: << include(scripts/create_release_tag.sh) >>
   - run:
