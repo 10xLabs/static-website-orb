@@ -7,8 +7,6 @@ parameters:
     default: deploy
 
 steps:
-  - attach_workspace:
-      at: .
   - run:
       name: Install Pulumi CLI
       environment:
