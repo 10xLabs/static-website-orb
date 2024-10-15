@@ -3,6 +3,8 @@ description: >
 
 executor: node
 
+resource_class: large
+
 steps:
   - checkout
   - install
