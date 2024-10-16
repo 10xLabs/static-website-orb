@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG_FILE="upload.config.json"
+CONFIG_FILE="deploy/upload.config.json"
 
 upload_to_s3() {
     local source_dir=$1
