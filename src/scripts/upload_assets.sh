@@ -20,15 +20,15 @@ upload_to_s3() {
         CMD="$CMD --exclude \"$dir\""
     done
 
-    if [[ ! -z "$cache_control" ]]; then
+    if [[ -n "$cache_control" ]]; then
         CMD="$CMD --cache-control \"$cache_control\""
     fi
 
-    if [[ ! -z "$content_encoding" ]]; then
+    if [[ -n "$content_encoding" ]]; then
         CMD="$CMD --content-encoding \"$content_encoding\""
     fi
 
-    if [[ ! -z "$content_type" ]]; then
+    if [[ -n "$content_type" ]]; then
         CMD="$CMD --content-type \"$content_type\""
     fi
 
