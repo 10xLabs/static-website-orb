@@ -33,16 +33,16 @@ upload_to_s3() {
     fi
 
     echo "$CMD"
-    eval $CMD
+    eval "$CMD"
 }
 
 for row in $(jq -c '.[]' $CONFIG_FILE); do
-    source_dir=$(echo $row | jq -r '.sourceDirectory')
-    include_dirs=$(echo $row | jq -r '.includeDirectories // empty')
-    exclude_dirs=$(echo $row | jq -r '.excludeDirectories // empty')
-    cache_control=$(echo $row | jq -r '.cacheControl // empty')
-    content_encoding=$(echo $row | jq -r '.contentEncoding // empty')
-    content_type=$(echo $row | jq -r '.contentType // empty')
+    source_dir=$(echo "$row" | jq -r '.sourceDirectory')
+    include_dirs=$(echo "$row" | jq -r '.includeDirectories // empty')
+    exclude_dirs=$(echo "$row" | jq -r '.excludeDirectories // empty')
+    cache_control=$(echo "$row" | jq -r '.cacheControl // empty')
+    content_encoding=$(echo "$row" | jq -r '.contentEncoding // empty')
+    content_type=$(echo "$row" | jq -r '.contentType // empty')
 
     upload_to_s3 "$source_dir" "$include_dirs" "$exclude_dirs" "$cache_control" "$content_encoding" "$content_type"
 done
