@@ -37,3 +37,6 @@ steps:
   - run:
       name: Upload assets
       command: << include(scripts/upload_assets.sh) >>
+  - run:
+      name: Invalidate distribution
+      command: << include(scripts/invalidate_distribution.sh) >>
