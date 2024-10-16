@@ -32,6 +32,8 @@ steps:
   - run:
       name: Set release version
       command: << include(scripts/calculate_release_version.sh) >>
+  - attach_workspace:
+      at: .
   - run:
       name: Upload assets
       command: << include(scripts/upload_assets.sh) >>
