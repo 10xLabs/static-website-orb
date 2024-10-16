@@ -9,6 +9,9 @@ steps:
       name: Set parameters
       command: << include(scripts/set_parameters.sh) >>
   - run:
+      name: Set release version
+      command: << include(scripts/calculate_release_version.sh) >>
+  - run:
       name: Build distribution
       command: << include(scripts/build.sh) >>
   - persist_to_workspace:
