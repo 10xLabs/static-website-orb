@@ -47,4 +47,4 @@ for row in $(jq -c '.[]' $CONFIG_FILE); do
     upload_to_s3 "$source_dir" "$include_dirs" "$exclude_dirs" "$cache_control" "$content_encoding" "$content_type"
 done
 
-aws s3 sync s3://$BUCKET_NAME/$RELEASE_TAG/ s3://$BUCKET_NAME/latest/
+aws s3 sync "s3://$BUCKET_NAME/$RELEASE_TAG/" "s3://$BUCKET_NAME/latest/"
