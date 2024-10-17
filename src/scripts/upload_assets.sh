@@ -12,13 +12,21 @@ upload_to_s3() {
 
     CMD="aws s3 sync $source_dir s3://$BUCKET_NAME/$RELEASE_TAG/"
 
-    for dir in $(echo "$include_dirs" | jq -r '.[]'); do
-        CMD="$CMD --include \"$dir\""
-    done
+    if [[ -n "$include_dirs" && $(echo "$include_dirs" | jq 'length') -gt 0 ]]; then
+        for dir in $(echo "$include_dirs" | jq -r '.[]'); do
+            CMD="$CMD --include \"$dir\""
+        done
+    else
+        CMD="$CMD --include \"*\""
+    fi
 
-    for dir in $(echo "$exclude_dirs" | jq -r '.[]'); do
-        CMD="$CMD --exclude \"$dir\""
-    done
+    if [[ -n "$exclude_dirs" && $(echo "$exclude_dirs" | jq 'length') -gt 0 ]]; then
+        for dir in $(echo "$exclude_dirs" | jq -r '.[]'); do
+            CMD="$CMD --exclude \"$dir\""
+        done
+    else
+        CMD="$CMD --exclude \"*\""
+    fi
 
     if [[ -n "$cache_control" ]]; then
         CMD="$CMD --cache-control \"$cache_control\""
@@ -36,6 +44,9 @@ upload_to_s3() {
     eval "$CMD"
 }
 
+echo "Removing existing assets from $RELEASE_TAG"
+aws s3 rm "s3://$BUCKET_NAME/$RELEASE_TAG/" --recursive
+
 for row in $(jq -c '.[]' $CONFIG_FILE); do
     source_dir=$(echo "$row" | jq -r '.sourceDirectory')
     include_dirs=$(echo "$row" | jq -r '.includeDirectories // empty')
@@ -47,4 +58,5 @@ for row in $(jq -c '.[]' $CONFIG_FILE); do
     upload_to_s3 "$source_dir" "$include_dirs" "$exclude_dirs" "$cache_control" "$content_encoding" "$content_type"
 done
 
+echo "Marking $RELEASE_TAG as the latest release"
 aws s3 sync "s3://$BUCKET_NAME/$RELEASE_TAG/" "s3://$BUCKET_NAME/latest/"
