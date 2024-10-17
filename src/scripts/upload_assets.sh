@@ -12,20 +12,20 @@ upload_to_s3() {
 
     CMD="aws s3 sync $source_dir s3://$BUCKET_NAME/$RELEASE_TAG/"
 
-    if [[ -n "$include_dirs" && $(echo "$include_dirs" | jq 'length') -gt 0 ]]; then
-        for dir in $(echo "$include_dirs" | jq -r '.[]'); do
-            CMD="$CMD --include \"$dir\""
-        done
-    else
-        CMD="$CMD --include \"*\""
-    fi
-
     if [[ -n "$exclude_dirs" && $(echo "$exclude_dirs" | jq 'length') -gt 0 ]]; then
         for dir in $(echo "$exclude_dirs" | jq -r '.[]'); do
             CMD="$CMD --exclude \"$dir\""
         done
     else
         CMD="$CMD --exclude \"*\""
+    fi
+
+    if [[ -n "$include_dirs" && $(echo "$include_dirs" | jq 'length') -gt 0 ]]; then
+        for dir in $(echo "$include_dirs" | jq -r '.[]'); do
+            CMD="$CMD --include \"$dir\""
+        done
+    else
+        CMD="$CMD --include \"*\""
     fi
 
     if [[ -n "$cache_control" ]]; then
