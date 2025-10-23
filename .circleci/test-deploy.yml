@@ -14,13 +14,12 @@ workflows:
             tags:
               only: /.*/
       - orb-tools/publish:
-          orb-name: nexbus/static-website
-          vcs-type: <<pipeline.project.type>>
-          pub-type: production
-          requires:
-            [orb-tools/lint, orb-tools/pack]
+          orb_name: nexbus/static-website
+          vcs_type: <<pipeline.project.type>>
+          pub_type: production
+          requires: [orb-tools/lint, orb-tools/pack]
           context: orb-publishing
-          enable-pr-comment: false
+          enable_pr_comment: false
           filters:
             branches:
               ignore: /.*/
