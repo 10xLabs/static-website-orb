@@ -7,8 +7,9 @@ parameters:
     default: deploy
 
 steps:
-  - attach_workspace:
-      at: .
+  - run:
+      name: Install AWS CLI
+      command: << include(scripts/install_aws_cli.sh) >>
   - run:
       name: Install Pulumi CLI
       environment:
@@ -22,3 +23,20 @@ steps:
       environment:
         WORKING_DIRECTORY: << parameters.working-directory >>
       command: << include(scripts/pulumi_update.sh) >>
+  - run:
+      name: Set bucket name
+      command: << include(scripts/set_bucket_name.sh) >>
+  - run:
+      name: Set distribution id
+      command: << include(scripts/set_distribution_id.sh) >>
+  - run:
+      name: Set release version
+      command: << include(scripts/calculate_release_version.sh) >>
+  - attach_workspace:
+      at: .
+  - run:
+      name: Upload assets
+      command: << include(scripts/upload_assets.sh) >>
+  - run:
+      name: Invalidate distribution
+      command: << include(scripts/invalidate_distribution.sh) >>

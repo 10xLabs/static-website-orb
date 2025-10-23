@@ -1,43 +1,83 @@
 #!/bin/bash
+if [[ "$CIRCLE_BRANCH" != "develop" && "$CIRCLE_BRANCH" != "master" ]]; then
+    RELEASE_TAG=$(echo "$CIRCLE_SHA1" | cut -c -7)
 
-RELEASE_TAG="v1.0.0"
+    echo "RELEASE_TAG: $RELEASE_TAG"
+    echo "export RELEASE_TAG=$RELEASE_TAG" >>"$BASH_ENV"
+
+    exit 0
+fi
+
+# shellcheck disable=SC2148
+PRE_RELEASE="true"
+if [ "$CIRCLE_BRANCH" = "master" ]; then
+    PRE_RELEASE="false"
+fi
+
+RELEASE_TAG=""
+ZERO_VERSION="v0.0.0"
+
+pre_number="0"
+pre_version="v1.0.0"
 
 data=$(git tag --list --sort "-version:refname")
 # shellcheck disable=SC2206
 IFS=$'\n' tags=($data)
+tags+=("$ZERO_VERSION")
 
-for tag in "${tags[@]}"
-do
+for tag in "${tags[@]}"; do
     if [[ $tag =~ ^v[0-9]+.[0-9]+.[0-9]+$ ]]; then
         version=${tag#"v"}
         # shellcheck disable=SC2206
         IFS=$'.' tokens=($version)
-        
+
         major="${tokens[0]}"
         minor="${tokens[1]}"
         patch="${tokens[2]}"
-        
+
+        if [ "$tag" = "$ZERO_VERSION" ]; then
+            RELEASE_TYPE="MAJOR"
+        fi
+
         case "$RELEASE_TYPE" in
-            PATCH)
-                patch=$((patch+1))
+        PATCH)
+            patch=$((patch + 1))
             ;;
-            
-            MINOR)
-                minor=$((minor+1))
-                patch="0"
+
+        MINOR)
+            minor=$((minor + 1))
+            patch="0"
             ;;
-            
-            MAJOR)
-                major=$((major+1))
-                minor="0"
-                patch="0"
+
+        MAJOR)
+            major=$((major + 1))
+            minor="0"
+            patch="0"
             ;;
         esac
-        
-        RELEASE_TAG="v$major.$minor.$patch"
-        
+
+        version="$major.$minor.$patch"
+        if [ "$PRE_RELEASE" = "true" ]; then
+            if [ "$version" = "$pre_version" ]; then
+                pre_number=$((pre_number + 1))
+            else
+                pre_number="0"
+            fi
+            version="$version-pre.$pre_number"
+        fi
+        RELEASE_TAG="v$version"
+
         break
+    fi
+
+    if [[ $pre_version == "v1.0.0" && $tag =~ ^v[0-9]+.[0-9]+.[0-9]+-pre.[0-9]+$ ]]; then
+        pre_version=${tag#"v"}
+        # shellcheck disable=SC2206
+        IFS=$'.' tokens=($tag)
+        pre_number="${tokens[-1]}"
+        pre_version=${pre_version%-pre*}
     fi
 done
 
-echo "export RELEASE_TAG=$RELEASE_TAG" >> "$BASH_ENV"
+echo "RELEASE_TAG: $RELEASE_TAG"
+echo "export RELEASE_TAG=$RELEASE_TAG" >>"$BASH_ENV"
