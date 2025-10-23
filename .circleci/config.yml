@@ -56,10 +56,10 @@ workflows:
               only: /.*/
       # Publish development version(s) of the orb.
       - orb-tools/publish:
-          orb-name: nexbus/static-website
+          orb_name: nexbus/static-website
           context: orb-publishing # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
-          pub-type: dev
-          vcs-type: << pipeline.project.type >>
+          pub_type: dev
+          vcs_type: << pipeline.project.type >>
           requires:
             - orb-tools/lint
             - orb-tools/pack
@@ -71,11 +71,11 @@ workflows:
       # Trigger an integration workflow to test the
       # dev:${CIRCLE_SHA1:0:7} version of your orb
       - orb-tools/continue:
-          pipeline-number: << pipeline.number >>
+          pipeline_number: << pipeline.number >>
           context: orb-publishing
           requires:
             - orb-tools/publish
-          vcs-type: << pipeline.project.type >>
+          vcs_type: << pipeline.project.type >>
           filters:
             branches:
               ignore: /.*/
