@@ -5,6 +5,13 @@ executor: node
 
 resource_class: large
 
+parameters:
+  working-directory:
+    type: string
+    default: "~/project"
+
+working_directory: << parameters.working-directory >>
+
 steps:
   - checkout
   - install

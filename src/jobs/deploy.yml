@@ -6,9 +6,10 @@ executor: node
 parameters:
   working-directory:
     type: string
-    default: deploy
+    default: "~/project"
+
+working_directory: << parameters.working-directory >>
 
 steps:
   - checkout
-  - deploy:
-    working-directory: << parameters.working-directory >>
+  - deploy
